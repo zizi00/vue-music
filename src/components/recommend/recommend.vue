@@ -14,17 +14,19 @@
   </div>
 </template>
 <script type="text/ecmasrcipt-6">
-import {getRecommend} from '../../api/recommend.js'
+import {getRecommend, getRecommandSong} from '../../api/recommend.js'
 import {ERR_OK} from '../../api/config.js'
 import slider from '../../base/slider'
 export default {
   data () {
     return {
-      recommends: []
+      recommends: [],
+      recomendsong: []
     }
   },
   created () {
     this._getRecommend()
+    this._getRecommandSong()
   },
   methods: {
     _getRecommend () {
@@ -33,6 +35,15 @@ export default {
           this.recommends = res.data.slider
         }
       })
+    },
+    _getRecommandSong () {
+      getRecommandSong().then((res) => {
+        if (res.code === ERR_OK) {
+          this.recomendsong = res.data.list
+
+        }
+      })
+      console.log(this.recomendsong)
     }
   },
   components: {
@@ -41,5 +52,4 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
-
 </style>
